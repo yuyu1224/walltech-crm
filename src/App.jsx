@@ -353,7 +353,7 @@ const CustomerList = ({ customers, followUps, onViewDetail, onAddCustomer, onDel
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">主营跟进业务</label>
                 <select value={newCust.industry} onChange={e => setNewCust({...newCust, industry: e.target.value})} className="w-full px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all text-slate-700">
-                  <option>海运出口 (FCL)</option><option>国际空运</option><option>跨境电商 (eTower)</option><option>报关清关等</option>
+                  <option>海运出口 (FCL)</option><option>国际空运</option><option>跨境电商 (eTower)</option><option>仓储物流</option><option>报关清关</option>
                 </select>
               </div>
               <div>
