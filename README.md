@@ -2,7 +2,7 @@
 
 在线演示地址：[https://yuyu1224.github.io/walltech-crm/](https://yuyu1224.github.io/walltech-crm/)
 
-> 阅读提示：本 README 包含该演示项目的代码运行指南与技术架构说明。另附：关于本题目的核心业务思考、产品设计理念、MVP 取舍及未来演进 Roadmap，已撰写为详情报告《WallTech 客户跟进及效能考核模块 - 产品设计方案.pdf (或 Word)》，可结合阅读。
+> 阅读提示：本 README 包含该演示项目的代码运行指南与技术架构说明。另附：关于本题目的核心业务思考、产品设计理念、MVP 取舍及未来演进 Roadmap，已撰写为详情报告《WallTech 客户跟进及效能考核模块 - 产品设计方案》，可结合阅读。
 
 ---
 
