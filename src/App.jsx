@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Users, Clock, MapPin, Phone, Video, Mail, ChevronRight, ArrowLeft, X, AlertCircle, CheckCircle } from 'lucide-react';
+import { LayoutDashboard, Users, Clock, MapPin, Phone, Video, Mail, ChevronRight, ArrowLeft, X, AlertCircle, CheckCircle, Megaphone, LifeBuoy, PieChart, Settings, Menu } from 'lucide-react';
 
 // --- MESSAGE TOAST SYSTEM ---
 const toastStore = {
@@ -684,69 +684,158 @@ export default function App() {
 
   const selectedCustomer = selectedCustomerId ? customers.find(c => c.id === selectedCustomerId) : null;
 
+  // 模拟各个原有模块的占位页面
+  const PlaceholderPage = ({ title, icon: Icon, desc }) => (
+    <div className="flex flex-col items-center justify-center h-full min-h-[60vh] animate-in fade-in zoom-in duration-500">
+      <div className="w-24 h-24 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mb-6 shadow-inner">
+        <Icon size={48} />
+      </div>
+      <h2 className="text-2xl font-bold text-slate-800 mb-2">{title}</h2>
+      <p className="text-slate-500 max-w-md text-center">{desc}</p>
+      <div className="mt-8 px-4 py-2 bg-white text-slate-500 rounded-lg text-sm border border-slate-200 flex items-center shadow-sm">
+        <CheckCircle size={16} className="mr-2 text-emerald-500" />
+        系统原有存量模块（非本次新需求演示范围，已省略界面）
+      </div>
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
+    <div className="flex h-screen bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900 overflow-hidden">
       <ToastContainer />
       
-      {/* Navbar */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center bg-slate-900 text-white w-9 h-9 rounded-xl justify-center font-bold text-lg mr-3 shadow-md shadow-slate-200">
-                W
-              </div>
-              <span className="font-bold text-xl tracking-tight text-slate-800">WallTech <span className="text-indigo-600">CRM</span></span>
+      {/* Sidebar (左侧边栏) */}
+      <aside className="w-[240px] bg-slate-900 text-slate-300 flex flex-col flex-shrink-0 transition-all z-20 shadow-xl shadow-slate-900/20">
+        <div className="h-16 flex items-center px-6 border-b border-white/10 shrink-0">
+          <div className="flex-shrink-0 flex items-center bg-indigo-500 text-white w-8 h-8 rounded-lg justify-center font-bold text-lg mr-3 shadow-lg shadow-indigo-500/30">
+            W
+          </div>
+          <span className="font-bold text-lg tracking-tight text-white">WallTech <span className="text-indigo-400">CRM</span></span>
+        </div>
+        
+        <div className="flex-1 overflow-y-auto py-6 px-3 space-y-1 custom-scrollbar">
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 px-3">核心业务</div>
+          <button
+            onClick={() => { setActiveTab('list'); setSelectedCustomerId(null); }}
+            className={`w-full flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group ${activeTab === 'list' ? 'bg-indigo-600 text-white shadow-md' : 'hover:bg-white/10 hover:text-white'}`}
+          >
+            <Users size={18} className={`mr-3 ${activeTab === 'list' ? 'text-indigo-200' : 'text-slate-400 group-hover:text-slate-300'}`} /> 
+            <span className="font-medium text-sm">客户管理</span>
+          </button>
+          <button
+            onClick={() => { setActiveTab('kpi'); setSelectedCustomerId(null); }}
+            className={`w-full flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group ${activeTab === 'kpi' ? 'bg-indigo-600 text-white shadow-md' : 'hover:bg-white/10 hover:text-white'}`}
+          >
+            <LayoutDashboard size={18} className={`mr-3 ${activeTab === 'kpi' ? 'text-indigo-200' : 'text-slate-400 group-hover:text-slate-300'}`} /> 
+            <span className="font-medium text-sm">销售管理</span>
+          </button>
+          
+          <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3 px-3 pt-6">扩展模块</div>
+          <button
+            onClick={() => { setActiveTab('marketing'); setSelectedCustomerId(null); }}
+            className={`w-full flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group ${activeTab === 'marketing' ? 'bg-indigo-600 text-white shadow-md' : 'hover:bg-white/10 hover:text-white'}`}
+          >
+            <Megaphone size={18} className={`mr-3 ${activeTab === 'marketing' ? 'text-indigo-200' : 'text-slate-400 group-hover:text-slate-300'}`} /> 
+            <span className="font-medium text-sm">市场营销</span>
+          </button>
+          <button
+            onClick={() => { setActiveTab('service'); setSelectedCustomerId(null); }}
+            className={`w-full flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group ${activeTab === 'service' ? 'bg-indigo-600 text-white shadow-md' : 'hover:bg-white/10 hover:text-white'}`}
+          >
+            <LifeBuoy size={18} className={`mr-3 ${activeTab === 'service' ? 'text-indigo-200' : 'text-slate-400 group-hover:text-slate-300'}`} /> 
+            <span className="font-medium text-sm">服务与支持</span>
+          </button>
+          <button
+            onClick={() => { setActiveTab('analysis'); setSelectedCustomerId(null); }}
+            className={`w-full flex items-center px-3 py-2.5 rounded-xl transition-all duration-200 group ${activeTab === 'analysis' ? 'bg-indigo-600 text-white shadow-md' : 'hover:bg-white/10 hover:text-white'}`}
+          >
+            <PieChart size={18} className={`mr-3 ${activeTab === 'analysis' ? 'text-indigo-200' : 'text-slate-400 group-hover:text-slate-300'}`} /> 
+            <span className="font-medium text-sm">报表与分析</span>
+          </button>
+        </div>
+
+        <div className="p-4 border-t border-white/10 shrink-0">
+          <div className="flex items-center space-x-3 px-3 py-2 bg-white/5 rounded-xl border border-white/5">
+            <div className="w-8 h-8 rounded-full bg-indigo-500 text-white flex items-center justify-center text-sm font-bold shadow-inner">
+              张
             </div>
-            <div className="flex space-x-10 h-full ml-10">
-              <button
-                onClick={() => { setActiveTab('list'); setSelectedCustomerId(null); }}
-                className={`flex items-center h-full px-1 border-b-[3px] text-sm font-bold transition-all duration-200 ${activeTab === 'list' && !selectedCustomerId ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300'}`}
-              >
-                <Users size={18} className="mr-2 opacity-80" /> 客户资源
-              </button>
-              <button
-                onClick={() => { setActiveTab('kpi'); setSelectedCustomerId(null); }}
-                className={`flex items-center h-full px-1 border-b-[3px] text-sm font-bold transition-all duration-200 ${activeTab === 'kpi' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-slate-800 hover:border-slate-300'}`}
-              >
-                <LayoutDashboard size={18} className="mr-2 opacity-80" /> 效能看板
-              </button>
-            </div>
-            <div className="flex items-center ml-auto">
-              <div className="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 flex items-center justify-center text-sm font-bold cursor-pointer transition-colors">
-                张
-              </div>
+            <div className="flex-1 overflow-hidden">
+              <p className="text-sm font-medium text-white truncate">张三</p>
+              <p className="text-xs text-slate-400 truncate">高级销售经理</p>
             </div>
           </div>
         </div>
-      </nav>
+      </aside>
 
-      {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {!selectedCustomerId && activeTab === 'list' && (
-          <CustomerList 
-            customers={customers} 
-            followUps={followUps}
-            onViewDetail={(c) => setSelectedCustomerId(c.id)}
-            onAddCustomer={handleAddCustomer} 
-            onDeleteCustomer={handleDeleteCustomer}
-          />
-        )}
-        
-        {!selectedCustomerId && activeTab === 'kpi' && (
-          <KPIDashboard followUps={followUps} customers={customers} />
-        )}
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+        {/* Top Header */}
+        <header className="h-16 bg-white/80 backdrop-blur-md border-b border-slate-200/80 flex items-center justify-between px-8 sticky top-0 z-10 shrink-0">
+          <div className="flex items-center text-slate-500 text-sm">
+            <Menu size={20} className="mr-4 cursor-pointer hover:text-indigo-600 transition-colors" />
+            <span className="font-medium">
+              {activeTab === 'list' && (selectedCustomerId ? '客户管理 / 客户全景视图' : '客户管理 / 资源池')}
+              {activeTab === 'kpi' && '销售管理 / 效能看板'}
+              {activeTab === 'marketing' && '市场营销 / 活动管理'}
+              {activeTab === 'service' && '服务与支持 / 工单中心'}
+              {activeTab === 'analysis' && '报表与分析 / 全局洞察'}
+            </span>
+          </div>
+          <div className="flex items-center space-x-4">
+            <button className="text-slate-400 hover:text-indigo-600 transition-colors"><Settings size={20} /></button>
+          </div>
+        </header>
 
-        {selectedCustomerId && selectedCustomer && (
-          <CustomerDetail 
-            customer={selectedCustomer} 
-            followUps={followUps} 
-            onBack={() => setSelectedCustomerId(null)}
-            onAddFollowUp={handleAddFollowUp}
-            onDeleteFollowUp={handleDeleteFollowUp}
-          />
-        )}
-      </main>
+        {/* Scrollable Page Content */}
+        <main className="flex-1 overflow-y-auto bg-slate-50/50 p-6 md:p-8 custom-scrollbar">
+          <div className="max-w-6xl mx-auto w-full pb-12">
+            {!selectedCustomerId && activeTab === 'list' && (
+              <CustomerList 
+                customers={customers} 
+                followUps={followUps}
+                onViewDetail={(c) => setSelectedCustomerId(c.id)}
+                onAddCustomer={handleAddCustomer} 
+                onDeleteCustomer={handleDeleteCustomer}
+              />
+            )}
+            
+            {!selectedCustomerId && activeTab === 'kpi' && (
+              <KPIDashboard followUps={followUps} customers={customers} />
+            )}
+
+            {selectedCustomerId && selectedCustomer && (
+              <CustomerDetail 
+                customer={selectedCustomer} 
+                followUps={followUps} 
+                onBack={() => setSelectedCustomerId(null)}
+                onAddFollowUp={handleAddFollowUp}
+                onDeleteFollowUp={handleDeleteFollowUp}
+              />
+            )}
+
+            {activeTab === 'marketing' && (
+              <PlaceholderPage 
+                title="市场营销自动化" 
+                desc="用于规划和执行电子邮件营销、社交媒体推广及广告投放，提升品牌知名度与客户参与度。"
+                icon={Megaphone}
+              />
+            )}
+            {activeTab === 'service' && (
+              <PlaceholderPage 
+                title="客户服务与支持" 
+                desc="提供工单管理与知识库功能，帮助客服团队快速响应客户需求，提升整体服务质量与客户满意度。"
+                icon={LifeBuoy}
+              />
+            )}
+            {activeTab === 'analysis' && (
+              <PlaceholderPage 
+                title="高级数据分析与报告" 
+                desc="跨越多个维度（客户行为、销售业绩、市场周期）提供深度数据透视，为管理层战略决策提供支持。"
+                icon={PieChart}
+              />
+            )}
+          </div>
+        </main>
+      </div>
     </div>
   );
 }
